@@ -4,6 +4,7 @@ label {
 }
 
 table {
+  /* width: 500px; */
   border-collapse: collapse;
 }
 
@@ -11,4 +12,15 @@ th,
 td {
   border: 1px solid black;
   padding: 10px 15px;
+  text-align: center;
+}
+
+.rank {
+  width: 100px;
+}
+.name {
+  width: 300px;
+}
+.time {
+  width: 100px;
 }

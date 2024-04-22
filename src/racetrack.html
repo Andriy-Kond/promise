@@ -14,28 +14,25 @@
     <main>
       <h1>Racetrack</h1>
 
-      <button>Start new race</button>
+      <button class="js-start-race-btn">Start new race</button>
       <hr />
       <p class="js-winner"></p>
       <p class="js-progress"></p>
       <hr />
 
       <table class="js-result-table">
+        <caption>
+          Racing results
+        </caption>
         <thead>
           <tr>
-            <th>Race</th>
-            <th>Winner</th>
-            <th>Race time</th>
+            <th class="rank">Ranking</th>
+            <th class="name">Participant</th>
+            <th class="time">Race time</th>
           </tr>
         </thead>
         <tbody></tbody>
-        <tfoot>
-          <tr>
-            <th>The best</th>
-            <th>Fast winner</th>
-            <th>The best time</th>
-          </tr>
-        </tfoot>
+        <tfoot></tfoot>
       </table>
     </main>
 
