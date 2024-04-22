@@ -1,0 +1,14 @@
+button,
+label {
+  cursor: pointer;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+th,
+td {
+  border: 1px solid black;
+  padding: 10px 15px;
+}
