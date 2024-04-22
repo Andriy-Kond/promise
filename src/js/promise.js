@@ -16,7 +16,7 @@ console.log("promise >> promise:::", promise);
 // Will run first
 console.log("Before promise.then()");
 
-// & Theoretically use
+// & Theoretically using - in then() "fulfilled" and "rejected"
 // Registering promise callbacks
 promise.then(
   // onResolve will run third or not at all
@@ -34,7 +34,7 @@ promise.then(
 // Will run second
 console.log("After promise.then()");
 
-// & Practically use
+// & Practically using - is used catch()
 promise
   .then(value => {
     console.log("practice - 'then' when resolved");
@@ -45,14 +45,13 @@ promise
     console.log(error);
   });
 
-// & Метод finally() може бути корисним, якщо необхідно виконати код після того, як обіцянка буде дозволена (fulfilled або rejected), незалежно від результату. Дозволяє уникнути дублювання коду в обробниках then() і catch().
+// * Метод finally() може бути корисним, якщо необхідно виконати код після того, як обіцянка буде дозволена (fulfilled або rejected), незалежно від результату. Дозволяє уникнути дублювання коду в обробниках then() і catch().
 promise
   .then(value => console.log(value)) // "Success! Value passed to resolve function"
   .catch(error => console.log(error)) // "Error! Error passed to reject function"
   .finally(() => console.log("finally - Promise settled")); // "Promise settled"
 
-// & Метод then() результатом свого виконання повертає ще один проміс, значенням якого буде те, що поверне його callback-функція onResolve. Це дозволяє будувати асинхронні ланцюжки з промісів.
-
+// * Метод then() результатом свого виконання повертає ще один проміс, значенням якого буде те, що поверне його callback - функція onResolve.Це дозволяє будувати асинхронні ланцюжки з промісів.
 const promise02 = new Promise((resolve, reject) => {
   setTimeout(() => {
     resolve(5);
@@ -78,7 +77,7 @@ promise02
     console.log("Final task");
   });
 
-// & Промісифікація функцій
+// * Промісифікація функцій
 const fetchUserFromServer = (username, onSuccess, onError) => {
   console.log(`Fetching data for ${username}`);
 
@@ -126,6 +125,7 @@ fetchUserFromServer02("Mango")
   .then(user => console.log(user))
   .catch(error => console.error(error));
 
+// ^ Методи класу Promise
 // * Promise.all() - Приймає масив промісів, очікує їх виконання і повертає проміс. Якщо всі проміси виконаються успішно, проміс, що повертається, перейде у стан fulfilled, а його значенням буде масив результатів виконання кожного промісу. У разі, коли хоча б один з промісів буде відхилений, проміс, що повертається, перейде у стан rejected, а його значенням буде помилка.
 const makePromise = (text, delay) => {
   return new Promise(resolve => {
@@ -151,7 +151,7 @@ Promise.race([promiseA, promiseB])
 // * Promise.resolve() і Promise.reject() - Статичні методи для створення промісів, що миттєво успішно виконуються або відхиляються. Працюють аналогічно new Promise() за винятком можливості вказати затримку, але мають коротший синтаксис.
 // Ці методи використовуються для промісифікаціі функцій, коли необхідно побудувати ланцюжок промісів і вже є початкове значення.
 
-// Виконаємо рефакторинг наступного коду.
+// * Промісифікація функції
 // ===========
 // Синхронна функція
 const makeGreeting = guestName => {
@@ -193,13 +193,44 @@ makeGreeting_(
 // ============
 // Промісифікована функція
 const makeGreeting_02 = guestName => {
+  console.log("guestName:::", guestName);
   if (guestName === "" || guestName === undefined) {
     return Promise.reject("Guest name must not be empty");
   }
 
-  Promise.resolve(`Welcome ${guestName}`);
+  return Promise.resolve(`Welcome ${guestName}`);
 };
 
 makeGreeting_02("Mango")
-  .then(greeting => console.log(greeting))
+  .then(greeting => console.log(`makeGreeting_02::: ${greeting}`))
   .catch(error => console.error(error));
+// */ Промісифікація функції
+
+// * Якщо не передати catch, то буде помилка
+const promise10 = new Promise((resolve, reject) => {
+  reject("Whoops");
+});
+
+promise10.then(value => console.log("value :>> ", value)).catch(error => console.log("error :>> ", error));
+
+// * Послідовність виклику
+console.log("Value === A :>> Послідовність виклику ");
+
+const timeout10 = setTimeout(() => console.log("timeout 0 === B:>> "), 0);
+console.log("timeout10:::", timeout10);
+
+const promiseCallQueue = new Promise(resolve => {
+  resolve(console.log("promiseCallQueue 0 === C"));
+});
+
+promiseCallQueue.then(value => console.log("promiseCallQueue.then value :>> ", value));
+
+console.log("Value === D :>> Послідовність виклику ");
+
+// Value === A :>> Послідовність виклику
+// promise.js:221 timeout::: 2
+// promise.js:224 promiseCallQueue 0 === C
+// promise.js:229 Value === D :>> Послідовність виклику
+// promise.js:227 promiseCallQueue.then value :>>  undefined
+// promise.js:220 timeout 0 === B:>>
+// */ Послідовність виклику
