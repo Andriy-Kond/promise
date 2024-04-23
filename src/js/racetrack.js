@@ -1,7 +1,4 @@
-// import randomTime from "./service/randomTime";
-function getRandomTime(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) + min);
-}
+import randomTime from "./service/randomTime.js";
 import raceTpl from "../templates/race.hbs";
 
 const horses = ["Secretariat", "Eclipse", "West Australian", "Flying Fox", "Seabiscuit"];
