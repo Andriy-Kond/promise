@@ -1,6 +1,7 @@
 import randomTime from "./service/randomTime";
 import raceTpl from "../templates/race.hbs";
-import horses from "../db/horses";
+
+const horses = ["Secretariat", "Eclipse", "West Australian", "Flying Fox", "Seabiscuit"];
 
 // const horses = [];
 
