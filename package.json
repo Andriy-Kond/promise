@@ -5,8 +5,8 @@
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "parcel src/*.html",
-    "build": "parcel build src/*.html --public-url /promise/ --no-minify"
+    "start": "parcel *.html",
+    "build": "parcel build *.html --public-url /promise/ --no-minify"
   },
   "author": "",
   "license": "ISC",
